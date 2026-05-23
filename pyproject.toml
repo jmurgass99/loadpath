@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loadpath-core"
+version = "0.1.0"
+description = "Esquemas de datos estructurales unificados (single source of truth) para la suite Structural JM / Loadpath"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2", "jmstructural-common"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["loadpath_core*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv.sources]
+jmstructural-common = { workspace = true }
