@@ -11,8 +11,8 @@ import math
 import numpy as np
 import pytest
 
-from loadpath_core.fea.non_prismatic import beam_stiffness_2d
-from loadpath_core.fea.semi_rigid import semi_rigid_bending_stiffness
+from loadpath.fea.non_prismatic import beam_stiffness_2d
+from loadpath.fea.semi_rigid import semi_rigid_bending_stiffness
 
 
 EI, L = 2.0e12, 4000.0

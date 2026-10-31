@@ -2,7 +2,7 @@
 import pytest
 from pydantic import ValidationError
 
-from loadpath_core import InternalForces
+from loadpath import InternalForces
 
 
 class TestConstruction:

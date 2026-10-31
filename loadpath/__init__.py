@@ -1,4 +1,4 @@
-"""loadpath-core — esquemas de datos estructurales unificados.
+"""loadpath — esquemas de datos estructurales unificados.
 
 Single source of truth para la suite Structural JM / Loadpath: objetos Pydantic
 v2 estrictos que describen física estructural base, compartidos entre el gateway

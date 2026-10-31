@@ -7,7 +7,7 @@ precisión de máquina. Orden de GDL: [ui, vi, θi, uj, vj, θj].
 import numpy as np
 import pytest
 
-from loadpath_core.fea.non_prismatic import beam_stiffness_2d
+from loadpath.fea.non_prismatic import beam_stiffness_2d
 
 
 def _prismatic_reference(EA, EI, L):

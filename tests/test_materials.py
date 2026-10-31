@@ -2,7 +2,7 @@
 import pytest
 from pydantic import ValidationError
 
-from loadpath_core import MaterialType, StructuralMaterial
+from loadpath import MaterialType, StructuralMaterial
 
 
 def _steel():

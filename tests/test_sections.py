@@ -2,7 +2,7 @@
 import pytest
 from pydantic import ValidationError
 
-from loadpath_core import FrameSection
+from loadpath import FrameSection
 
 
 def _w():
