@@ -1,5 +1,7 @@
 # loadpath — contrato de datos estructurales (materiales, secciones, esfuerzos) en Pydantic v2 y ayudas FEA de barra
 
+**Español** · [English](README.en.md) · [Português](README.pt.md) · [Italiano](README.it.md)
+
 Tres modelos estrictos que viajan entre programas de cálculo, comprobadores, exportadores e interfaces: `StructuralMaterial`, `FrameSection` e `InternalForces`, con unidades SI en el nombre de cada campo, `extra="forbid"` y JSON Schema para generar tipos en otros lenguajes. Más dos ayudas de elementos finitos de barra: la matriz de rigidez 2D de una viga de sección variable (EI(x), EA(x) por Simpson) y la condensación de resortes rotacionales de extremo para nudos semirrígidos. Dependencias: `pydantic` y `numpy`.
 
 [![CI](https://github.com/jmurgass99/loadpath/actions/workflows/ci.yml/badge.svg)](https://github.com/jmurgass99/loadpath/actions/workflows/ci.yml)
