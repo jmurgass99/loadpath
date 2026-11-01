@@ -1,0 +1,13 @@
+  grado      t=10     t=20     t=50     t=70   (f_y en MPa, EN 10025-2)
+  S235        235      225      215      215
+  S275        275      265      255      245
+  S355        355      345      335      325
+  S460        460      440      430      410
+
+Chapa de 50 mm: EN 10025-2 frente a la simplificación de EN 1993-1-1 Tabla 3.1 (40 < t <= 80):
+  S235: 215 MPa frente a 215 MPa; usar el nominal de t <= 16 (235) sobrestimaría un 9 %
+  S275: 255 MPa frente a 255 MPa; usar el nominal de t <= 16 (275) sobrestimaría un 8 %
+  S355: 335 MPa frente a 335 MPa; usar el nominal de t <= 16 (355) sobrestimaría un 6 %
+  S460: 430 MPa frente a 410 MPa; usar el nominal de t <= 16 (460) sobrestimaría un 7 %
+
+Ejemplo serializado: {"name":"S355 t=50 mm","material_type":"steel","E_MPa":210000.0,"poisson":0.3,"density_kg_m3":7850.0,"Fy_MPa":335.0,"Fu_MPa":470.0,"fc_MPa":null,"damping_ratio":null}

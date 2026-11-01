@@ -1,0 +1,12 @@
+Válido: S275 E = 210000 MPa
+
+  caso                         errores  tipo → campo
+  E sin unidad (campo `E`)           1  extra_forbidden → E
+  E_MPa negativo                     1  greater_than → E_MPa
+  ν = 0,7 (> 0,5)                    1  less_than_equal → poisson
+  densidad 0                         1  greater_than → density_kg_m3
+  tipo `adamantium`                  1  enum → material_type
+  F_y como texto                     1  float_parsing → Fy_MPa
+  falta E_MPa                        1  missing → E_MPa
+
+`extra='forbid'` convierte un campo sin unidad en un error en vez de en un número que viaja sin que nadie sepa si es MPa o kPa.

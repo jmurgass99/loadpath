@@ -1,0 +1,18 @@
+  x [m]  V_z [kN] M_z [kN·m]
+    0.0      72.0        0.0
+    0.5      60.0       33.0
+    1.0      48.0       60.0
+    1.5      36.0       81.0
+    2.0      24.0       96.0
+    2.5      12.0      105.0
+    3.0       0.0      108.0
+    3.5     -12.0      105.0
+    4.0     -24.0       96.0
+    4.5     -36.0       81.0
+    5.0     -48.0       60.0
+    5.5     -60.0       33.0
+    6.0     -72.0        0.0
+
+Envolvente: |V_z| máx = 72.0 kN en x = 0.0 m (q·L/2 = 72.0); M_z máx = 108.0 kN·m en x = 3.0 m (q·L²/8 = 108.0)
+Serializado: 13 estaciones, 111 bytes cada una; ejemplo: {"member_id":"V-12","station_m":3.0,"N_kN":0.0,"Vy_kN":0.0,"Vz_kN":0.0,"T_kNm":0.0,"My_kNm":0.0,"Mz_kNm":108.0}
+N, V_y, T y M_y quedan en 0,0 por defecto: un estado parcial es válido y explícito.

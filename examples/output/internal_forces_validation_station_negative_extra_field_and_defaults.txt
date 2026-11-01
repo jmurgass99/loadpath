@@ -1,0 +1,10 @@
+Estado parcial válido: {'member_id': 'C-1', 'station_m': 0.0, 'N_kN': 0.0, 'Vy_kN': 0.0, 'Vz_kN': 0.0, 'T_kNm': 0.0, 'My_kNm': 0.0, 'Mz_kNm': 0.0}
+
+  estación −1 m          → 1 error(es): greater_than_equal en station_m
+  campo `Fx_kN`          → 1 error(es): extra_forbidden en Fx_kN
+  sin member_id          → 1 error(es): missing en member_id
+  M_z como texto         → 1 error(es): float_parsing en Mz_kNm
+  dos errores a la vez   → 3 error(es): greater_than_equal en station_m; float_parsing en Mz_kNm; extra_forbidden en extra
+
+Fila de SAP2000 mapeada: {'member_id': 'V-12', 'station_m': 3.0, 'N_kN': -12.0, 'Vy_kN': 0.0, 'Vz_kN': 48.0, 'T_kNm': 0.0, 'My_kNm': 0.0, 'Mz_kNm': 72.0}
+El mapeo vive en el importador (y debe declarar el convenio de signo de P); el esquema no acepta los nombres del programa de origen.

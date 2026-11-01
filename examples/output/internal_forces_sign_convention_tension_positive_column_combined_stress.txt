@@ -1,0 +1,10 @@
+  barra                      N [kN] M_z [kN·m] σ fibra 1 [MPa] σ fibra 2 [MPa] σ_c,máx [MPa] |σ_c|/f_y
+  pilar P-3 (compresión)       -850        180            50.3          -164.3        -164.3      0.46
+  tirante T-1 (tracción)        300         20            32.0             8.2           0.0      0.00
+
+Con el signo del axil invertido al importar (error típico entre programas):
+  barra                      N [kN] M_z [kN·m] σ fibra 1 [MPa] σ fibra 2 [MPa] σ_c,máx [MPa] |σ_c|/f_y
+  pilar P-3 (compresión)        850        180           164.3           -50.3         -50.3      0.14
+  tirante T-1 (tracción)       -300         20            -8.2           -32.0         -32.0      0.09
+
+Con el signo invertido la fibra comprimida del pilar pasa de −164 a −50 MPa (la compresión máxima, que gobierna el pandeo y la clase de la sección, cae a un tercio) y el tirante aparece comprimido; |σ|máx no cambia, así que una comprobación que solo mire el máximo absoluto no lo detecta. El esquema documenta el convenio en el campo y el importador debe declararlo, no adivinarlo.

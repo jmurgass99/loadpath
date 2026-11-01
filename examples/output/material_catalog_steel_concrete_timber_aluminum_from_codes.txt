@@ -1,0 +1,14 @@
+Tipos admitidos: ['steel', 'concrete', 'cold_formed_steel', 'aluminum', 'timber', 'masonry']
+
+  material                           tipo                E [MPa]     ν ρ [kg/m³]    F_y    F_u    f_c     ξ
+  S355 (EN 10025-2)                  steel                210000  0.30      7850    355    490      —  0.02
+  A992 (ASTM)                        steel                200000  0.30      7850    345    450      —  0.02
+  C30/37 (EN 1992-1-1)               concrete              33000  0.20      2500      —      —     30  0.05
+  GL24h (EN 14080)                   timber                11500  0.40       420      —      —      —  0.01
+  EN AW-6061 T6 (EN 1999-1-1)        aluminum              70000  0.33      2700    240    260      —     —
+  Ladrillo macizo M10 (EN 1996-1-1)  masonry                5000  0.20      1800      —      —      5     —
+
+Módulo de cortante del S355: G = E/(2·(1+ν)) = 80769 MPa (EN 1993-1-1: 81 000)
+Peso propio del S355: 76.98 kN/m³; del C30/37: 24.52 kN/m³
+
+Un consumidor comprueba con `material_type` qué resistencia leer: Fy/Fu en metales, fc en hormigón y fábrica; None es «no aplica», no «cero».

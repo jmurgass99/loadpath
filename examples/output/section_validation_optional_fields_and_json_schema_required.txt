@@ -1,0 +1,13 @@
+Sección mínima: {'name': 'barra genérica', 'A_mm2': 5000.0, 'Ix_mm4': 80000000.0, 'Iy_mm4': 6000000.0, 'J_mm4': 200000.0}
+  opcionales en None: ['Cw_mm6', 'Zx_mm3', 'Zy_mm3', 'Sx_mm3', 'Sy_mm3', 'depth_mm', 'width_mm']
+Sección completa: W14X90, 12 de 12 campos
+
+JSON Schema: obligatorias ['name', 'A_mm2', 'Ix_mm4', 'Iy_mm4', 'J_mm4']; opcionales ['Cw_mm6', 'Zx_mm3', 'Zy_mm3', 'Sx_mm3', 'Sy_mm3', 'depth_mm', 'width_mm']
+
+  sin J          → missing en J_mm4
+  área 0         → greater_than en A_mm2
+  C_w negativo   → greater_than_equal en Cw_mm6
+  campo `peso`   → extra_forbidden en peso
+  I_x como texto → float_parsing en Ix_mm4
+
+C_w = 0 sí se admite (tubos cerrados); lo que se rechaza es el valor negativo.

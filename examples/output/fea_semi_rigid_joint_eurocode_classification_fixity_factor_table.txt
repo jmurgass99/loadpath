@@ -1,0 +1,17 @@
+IPE 400, L = 8 m: E·I_b/L_b = 6,072 kN·m/rad; umbrales EN 1993-1-8: articulada <= 3,036, rígida >= 48,573 (arriostrado) / 151,791 (no arriostrado)
+
+  S_j/(EI/L) S_j [kN·m/rad]      γ k_θiθi/(4EI/L) Monforton-Wu  arriostrado no arriostr.
+        0.25          1,518  0.077          0.058        0.058   articulada   articulada
+         0.5          3,036  0.143          0.108        0.108   articulada   articulada
+           1          6,072  0.250          0.190        0.190  semirrígida  semirrígida
+           2         12,143  0.400          0.312        0.313  semirrígida  semirrígida
+           4         24,286  0.571          0.467        0.467  semirrígida  semirrígida
+           8         48,573  0.727          0.629        0.629       rígida  semirrígida
+          12         72,860  0.800          0.714        0.714       rígida  semirrígida
+          25        151,791  0.893          0.836        0.836       rígida       rígida
+          50        303,581  0.943          0.910        0.910       rígida       rígida
+         100        607,162  0.971          0.953        0.953       rígida       rígida
+         inf            inf  1.000          1.000        1.000       rígida       rígida
+
+Una unión en el umbral «rígido» de pórtico arriostrado (S_j = 8·EI/L) conserva el 63 % de la rigidez rotacional 4EI/L de la viga; en el umbral no arriostrado (25·EI/L), el 84 %.
+R va en kN·m/rad, las mismas unidades que K_b; pasar una rigidez relativa (k·L/EI) hace que todo salga articulado.

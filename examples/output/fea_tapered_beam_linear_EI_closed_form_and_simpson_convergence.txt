@@ -1,0 +1,13 @@
+Forma cerrada: D₀₀ = 0.003355 m/kN, D₀₁ = 0.000792 rad/kN, D₁₁ = 0.000237 rad/(kN·m)
+Cotas prismáticas de D₀₀: EI₀ → 0.004103, 2·EI₀ → 0.002052
+
+    n  D₀₀ Simpson  error rel.  razón
+    2     0.003419    1.90e-02 
+    4     0.003361    1.57e-03   12.1
+    8     0.003356    1.08e-04   14.5
+   16     0.003355    6.93e-06   15.6
+   32     0.003355    4.36e-07   15.9
+   64     0.003355    2.73e-08   16.0
+
+Rigidez rotacional en el extremo i (K[θ_i,θ_i]): acartelada 14,222 frente a prismática EI₀ 11,699 kN·m/rad (1.22×); en j: 20,071 (1.72×): el extremo con más inercia (j) es el más rígido.
+Factor de transmisión K[θ_i,θ_j]/K[θ_j,θ_j] = 0.417 (prismática: 0,500).

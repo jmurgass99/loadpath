@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "loadpath"
-version = "0.1.0"
-description = "Unified structural data schemas (materials, frame sections, internal forces) as strict Pydantic v2 models, plus small FEA helpers."
+version = "0.1.1"
+description = "Structural data contract in strict Pydantic v2: materials, frame sections and internal forces with SI units in every field name, extra=forbid and JSON Schema for TypeScript; plus 2D beam FEA helpers for non-prismatic members (EI(x), EA(x) by Simpson) and semi-rigid end springs (Monforton-Wu)."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Jesús Murgas" }]
-keywords = ["structural-engineering", "schemas", "pydantic", "data-model", "sections", "materials", "internal-forces"]
+keywords = ["structural-engineering", "data-contract", "schemas", "pydantic", "json-schema", "sections", "materials", "internal-forces", "frame-sections", "finite-element", "beam-stiffness", "non-prismatic", "semi-rigid-connections", "eurocode", "sap2000"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",

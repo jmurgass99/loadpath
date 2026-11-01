@@ -1,0 +1,13 @@
+IPE 300: h = 300, b = 150, t_w = 7.1, t_f = 10.7, r = 15 mm
+              A [cm²]  I_x [cm⁴]  I_y [cm⁴] W_pl,x [cm³] I_t [cm⁴] I_w [10³ cm⁶]
+  calculado      53.8       7999        603          602      15.6           126
+  catálogo       53.8       8356        604          628      20.1           126
+  desvío       +0.0 %     -4.3 %     -0.2 %       -4.1 %   -22.5 %        +0.1 %
+
+HEB 300: h = 300, b = 300, t_w = 11.0, t_f = 19.0, r = 27 mm
+              A [cm²]  I_x [cm⁴]  I_y [cm⁴] W_pl,x [cm³] I_t [cm⁴] I_w [10³ cm⁶]
+  calculado     149.1      24187       8553         1790     148.8          1688
+  catálogo      149.1      25170       8563         1869     185.0          1688
+  desvío       -0.0 %     -3.9 %     -0.1 %       -4.2 %   -19.6 %        +0.0 %
+
+La corrección (4 − π)·r² deja el área exacta; en I_x y W_pl los acuerdos aportan ~4 % y en I_t un 20–25 %: I_y e I_w salen bien, I_t se toma de catálogo.

@@ -1,0 +1,9 @@
+Mapa de ejes:
+  flexión fuerte  M_z = 90 kN·m  →  I_x = 8.356e+07 mm⁴, S_x = 557000 mm³
+  flexión débil   M_y = 6 kN·m  →  I_y = 6.040e+06 mm⁴, S_y = 80500 mm³
+  cortante V_z = 60 kN acompaña a M_z (plano fuerte); V_y acompañaría a M_y
+
+Tensiones elásticas [MPa]: N/A = -22.3, M_z/S_x = ±161.6, M_y/S_y = ±74.5
+Esquina más comprimida: σ = -258.4 MPa → utilización elástica 0.73 frente a f_y = 355 MPa
+
+Si se cruzan los ejes (M_z con S_y): σ = 1118 MPa, 6.9 veces la real. El esquema lo evita nombrando los ejes en los dos modelos.
