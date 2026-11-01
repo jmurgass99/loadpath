@@ -12,7 +12,7 @@ from .materials import MaterialType, StructuralMaterial
 from .sections import FrameSection
 from .forces import InternalForces
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 UNIT_SYSTEM = "SI: kN, kN·m, m; sección en mm (mm²/mm⁴/mm³/mm⁶); material en MPa"
 
 __all__ = [
