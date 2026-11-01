@@ -21,6 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
 ]
 dependencies = ["pydantic>=2", "numpy>=1.26"]
 
@@ -34,6 +35,9 @@ Issues = "https://github.com/jmurgass99/loadpath/issues"
 
 [tool.setuptools.packages.find]
 include = ["loadpath*"]
+
+[tool.setuptools.package-data]
+loadpath = ["py.typed"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

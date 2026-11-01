@@ -17,11 +17,15 @@ punta. La rigidez del extremo libre es Kjj = D⁻¹, y la matriz completa
 Con EI constante se recupera exactamente la matriz prismática estándar.
 El axial se integra análogamente: ka = 1 / ∫₀ᴸ dx/EA(x).
 
+Cuando existen saltos bruscos de sección (cartelas escalonadas, platabandas),
+`breakpoints_x` permite subdividir [0, L] en subintervalos suaves e integrar
+Simpson por tramos sin error de Gibbs en las discontinuidades.
+
 Orden global de GDL: [ui, vi, θi, uj, vj, θj].
 """
 from __future__ import annotations
 
-from typing import Callable
+from typing import Callable, Sequence
 
 import numpy as np
 
@@ -32,11 +36,16 @@ def _as_callable(v) -> Callable[[float], float]:
     return lambda x, _v=float(v): _v
 
 
-def _simpson_nodes(L: float, n: int):
+def _simpson_nodes_interval(a: float, b: float, n: int, eps_end: float = 0.0):
+    if n < 2:
+        n = 2
     if n % 2 != 0:
         n += 1  # Simpson requiere número par de intervalos
-    h = L / n
-    x = np.linspace(0.0, L, n + 1)
+    h = (b - a) / n
+    x = np.linspace(a, b, n + 1)
+    if eps_end > 0.0 and len(x) >= 2:
+        x[0] = a + eps_end * (b - a)
+        x[-1] = b - eps_end * (b - a)
     w = np.ones(n + 1)
     w[1:-1:2] = 4.0
     w[2:-1:2] = 2.0
@@ -44,7 +53,17 @@ def _simpson_nodes(L: float, n: int):
     return x, w
 
 
-def beam_stiffness_2d(L: float, EI, EA, n: int = 20) -> np.ndarray:
+def _simpson_nodes(L: float, n: int):
+    return _simpson_nodes_interval(0.0, L, n, eps_end=0.0)
+
+
+def beam_stiffness_2d(
+    L: float,
+    EI,
+    EA,
+    n: int = 20,
+    breakpoints_x: Sequence[float] | None = None,
+) -> np.ndarray:
     """Matriz de rigidez 6×6 de una viga 2D de sección variable.
 
     Parameters
@@ -53,23 +72,43 @@ def beam_stiffness_2d(L: float, EI, EA, n: int = 20) -> np.ndarray:
     EI, EA : rigidez a flexión / axial. Cada una puede ser un escalar
         (sección prismática) o una función EI(x), EA(x) con 0 ≤ x ≤ L.
     n : número de intervalos de Simpson (se redondea a par).
+    breakpoints_x : abscisas interiores opcionales (0 < x_k < L) donde EI(x)
+        o EA(x) presentan discontinuidades o cambios bruscos de pendiente.
+        Si se indican, la cuadratura de Simpson se aplica tramo a tramo.
     """
     EI_f = _as_callable(EI)
     EA_f = _as_callable(EA)
-    x, w = _simpson_nodes(L, n)
 
-    # --- Flexión: flexibilidad del voladizo ---
+    if breakpoints_x:
+        interior = sorted({float(xb) for xb in breakpoints_x if 0.0 < float(xb) < L})
+    else:
+        interior = []
+
+    if not interior:
+        segments = [(0.0, L, n, 0.0)]
+    else:
+        knots = [0.0] + interior + [L]
+        segments = []
+        for a, b in zip(knots[:-1], knots[1:]):
+            n_sub = max(4, int(round(n * (b - a) / L)))
+            if n_sub % 2 != 0:
+                n_sub += 1
+            segments.append((a, b, n_sub, 1e-12))
+
     D = np.zeros((2, 2))
-    for xi, wi in zip(x, w):
-        m = np.array([L - xi, 1.0])
-        D += wi * np.outer(m, m) / EI_f(xi)
+    fa = 0.0
+    for a, b, n_sub, eps_end in segments:
+        x, w = _simpson_nodes_interval(a, b, n_sub, eps_end=eps_end)
+        for xi, wi in zip(x, w):
+            m = np.array([L - xi, 1.0])
+            D += wi * np.outer(m, m) / EI_f(xi)
+        fa += float(np.sum(w / np.array([EA_f(xi) for xi in x])))
+
     Kjj = np.linalg.inv(D)
     Tc = np.array([[-1.0, -L, 1.0, 0.0],
                    [0.0, -1.0, 0.0, 1.0]])
     K4 = Tc.T @ Kjj @ Tc  # GDL [vi, θi, vj, θj]
 
-    # --- Axial: flexibilidad en serie ---
-    fa = float(np.sum(w / np.array([EA_f(xi) for xi in x])))
     ka = 1.0 / fa
 
     # --- Ensamblaje 6×6 [ui, vi, θi, uj, vj, θj] ---

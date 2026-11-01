@@ -22,6 +22,63 @@ import math
 import numpy as np
 
 
+def fixity_factor_monforton_wu(R: float, EI: float, L: float) -> float:
+    """Factor de fijación de Monforton-Wu γ = 1 / (1 + 3·EI / (L·R)).
+
+    Para R = 0 devuelve 0.0 (rótula); para R = ∞ devuelve 1.0 (empotramiento).
+    """
+    if R < 0.0:
+        raise ValueError("R debe ser >= 0")
+    if EI <= 0.0 or L <= 0.0:
+        raise ValueError("EI y L deben ser > 0")
+    if R == 0.0:
+        return 0.0
+    if math.isinf(R):
+        return 1.0
+    return 1.0 / (1.0 + 3.0 * EI / (L * R))
+
+
+def classify_connection_ec3(
+    Sj_ini: float,
+    EI: float,
+    L: float,
+    *,
+    braced: bool = True,
+) -> dict:
+    """Clasificación por rigidez rotacional según EN 1993-1-8 §5.2.2.5.
+
+    Parámetro adimensional k_b = S_{j,ini} · L / (E · I_b):
+      - Nominalmente articulada (pinned): k_b <= 0.5
+      - Rígida (rigid): k_b >= 8.0 (pórtico arriostrado) o k_b >= 25.0 (no arriostrado)
+      - Semirrígida (semi-rigid): entre ambos límites.
+    """
+    if Sj_ini < 0.0:
+        raise ValueError("Sj_ini debe ser >= 0")
+    if EI <= 0.0 or L <= 0.0:
+        raise ValueError("EI y L deben ser > 0")
+    upper_bound = 8.0 if braced else 25.0
+    lower_bound = 0.5
+    if math.isinf(Sj_ini):
+        kb = math.inf
+        classification = "rigid"
+    else:
+        kb = (Sj_ini * L) / EI
+        if kb <= lower_bound:
+            classification = "pinned"
+        elif kb >= upper_bound:
+            classification = "rigid"
+        else:
+            classification = "semi-rigid"
+    return {
+        "classification": classification,
+        "kb_dimensionless": kb,
+        "pinned_upper_bound": lower_bound,
+        "rigid_lower_bound": upper_bound,
+        "braced": braced,
+        "fixity_factor_gamma": fixity_factor_monforton_wu(Sj_ini, EI, L),
+    }
+
+
 def semi_rigid_bending_stiffness(Kb, Ri: float, Rj: float) -> np.ndarray:
     """Matriz de flexión 4×4 con resortes de extremo. GDL [vi, θi, vj, θj]."""
     Kb = np.asarray(Kb, dtype=float)

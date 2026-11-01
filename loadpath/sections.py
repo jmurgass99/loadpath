@@ -8,8 +8,9 @@ class FrameSection(BaseModel):
     """Propiedades geométricas de una sección de barra (unidades SI, mm).
 
     Obligatorias las que cualquier análisis elástico necesita (`A`, `Ix`, `Iy`,
-    `J`). El alabeo (`Cw`), los módulos plásticos/elásticos y las dimensiones
-    brutas son opcionales: no todos los flujos los requieren.
+    `J`). El alabeo (`Cw`), los módulos plásticos/elásticos, las propiedades
+    eficaces de Clase 4 y las dimensiones brutas son opcionales: no todos los
+    flujos los requieren.
 
     Ejes: x = eje fuerte, y = eje débil (convención del ecosistema).
     
@@ -33,6 +34,12 @@ class FrameSection(BaseModel):
     Sy_mm3: float | None = Field(default=None, gt=0, description="Módulo elástico, eje y (mm³).")
     depth_mm: float | None = Field(default=None, gt=0, description="Canto total (mm).")
     width_mm: float | None = Field(default=None, gt=0, description="Ancho (mm).")
+    section_class: int | None = Field(default=None, ge=1, le=4, description="Clase de sección EN 1993-1-1 (1 a 4).")
+    A_eff_mm2: float | None = Field(default=None, gt=0, description="Área eficaz para secciones Clase 4 (mm²).")
+    Ix_eff_mm4: float | None = Field(default=None, gt=0, description="Inercia eficaz eje fuerte x Clase 4 (mm⁴).")
+    Iy_eff_mm4: float | None = Field(default=None, gt=0, description="Inercia eficaz eje débil y Clase 4 (mm⁴).")
+    Sx_eff_mm3: float | None = Field(default=None, gt=0, description="Módulo elástico eficaz eje fuerte x Clase 4 (mm³).")
+    Sy_eff_mm3: float | None = Field(default=None, gt=0, description="Módulo elástico eficaz eje débil y Clase 4 (mm³).")
 
     @property
     def I_strong_axis_mm4(self) -> float:
