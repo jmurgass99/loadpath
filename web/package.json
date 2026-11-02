@@ -7,7 +7,7 @@
     "dev": "vite --open",
     "build": "vite build",
     "preview": "vite preview --open",
-    "test": "vitest run",
+    "test": "node src/__tests__/loadpathWeb.test.ts",
     "build:wasm": "emcc ./src/solver/cpp/lSolver.cpp -o ./src/solver/cpp/built/lSolver.wasm -O3 -s STANDALONE_WASM --no-entry -s EXPORTED_FUNCTIONS=_monfortonFixityFactor,_beamFlexuralStiffness"
   },
   "dependencies": {

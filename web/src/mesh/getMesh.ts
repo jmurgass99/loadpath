@@ -3,7 +3,7 @@ import type {
   DiscreteMesh,
   GeometryMapping,
   SemanticGeometry,
-} from "../data-model";
+} from "../data-model.ts";
 
 export function getMesh(
   geometry: SemanticGeometry,

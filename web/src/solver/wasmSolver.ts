@@ -3,7 +3,7 @@ import type {
   FrameAnalysisResult,
   FrameComponents,
   SemanticGeometry,
-} from "../data-model";
+} from "../data-model.ts";
 
 const LSOLVER_WASM_BASE64 =
   "AGFzbQEAAAABEAJgBHx8fHwBfGADfHx8AXwDAwIAAQcxAhVtb25mb3J0b25GaXhpdHlGYWN0b3IAABViZWFtRmxleHVyYWxTdGlmZm5lc3MAAQpIAisARAAAAAAAAPA/RAAAAAAAAPA/RAAAAAAAAAhAIAGiIAKiIAAgA6KjoKMLGgBEAAAAAAAAKEAgAKIgAaIgAiACoiACoqML";
