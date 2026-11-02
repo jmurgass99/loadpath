@@ -1,5 +1,5 @@
 JSON Schema de MemberCheckInput: propiedades ['member_id', 'length_m', 'material', 'section', 'forces']; $defs = ['FrameSection', 'InternalForces', 'MaterialType', 'StructuralMaterial']
-Documento serializado: 996 bytes; vuelta validada igual al original: True
+Documento serializado: 1106 bytes; vuelta validada igual al original: True
 
   x [m] M_z [kN·m]  σ = N/A + M/S [MPa]  σ/f_y
     0.0        0.0                  2.2   0.01

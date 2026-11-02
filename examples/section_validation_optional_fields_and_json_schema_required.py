@@ -1,7 +1,8 @@
 """Mínimo obligatorio de una sección, campos opcionales en None y lo que el esquema rechaza.
 
 `FrameSection` exige lo que cualquier análisis elástico de barras necesita (A, I_x, I_y, J) y
-deja opcionales alabeo, módulos y dimensiones. Se muestra una sección mínima, una completa, el
+deja opcionales alabeo, módulos, dimensiones, la clase de sección y las propiedades eficaces de
+Clase 4 (A_eff, I_eff, S_eff). Se muestra una sección mínima, una laminada con sus propiedades brutas, el
 `required` del JSON Schema, y cuatro rechazos: sin J, área nula, C_w negativo y un campo `peso`
 que no existe (unidades implícitas).
 
@@ -18,7 +19,9 @@ def main() -> None:
     print("  opcionales en None:", [k for k, v in minima.model_dump().items() if v is None])
     completa = FrameSection(name="W14X90", A_mm2=17100, Ix_mm4=4.16e8, Iy_mm4=1.51e8, J_mm4=4.16e6, Cw_mm6=6.78e12,
                             Zx_mm3=2.59e6, Sx_mm3=2.33e6, Zy_mm3=1.22e6, Sy_mm3=8.19e5, depth_mm=356, width_mm=369)
-    print(f"Sección completa: {completa.name}, {sum(v is not None for v in completa.model_dump().values())} de {len(completa.model_dump())} campos")
+    vacios = [k for k, v in completa.model_dump().items() if v is None]
+    print(f"Sección laminada con propiedades brutas: {completa.name}, {len(completa.model_dump()) - len(vacios)} de "
+          f"{len(completa.model_dump())} campos; sin rellenar: {vacios}")
     schema = FrameSection.model_json_schema()
     print(f"\nJSON Schema: obligatorias {schema['required']}; opcionales {[k for k in schema['properties'] if k not in schema['required']]}")
     casos = [

@@ -32,14 +32,14 @@ Between an analysis program, a section checker and a report, data crosses three 
 pip install git+https://github.com/jmurgass99/loadpath.git
 ```
 
-For development: `git clone`, `pip install -e ".[test]"`, `pytest -q` (6 test files). On Windows, if the console is not UTF-8, run the examples with `python -X utf8 examples/<name>.py`.
+For development: `git clone`, `pip install -e ".[test]"`, `pytest -q` (8 test files). On Windows, if the console is not UTF-8, run the examples with `python -X utf8 examples/<name>.py`.
 
 ## Capabilities
 
 | Capability | Modules | Code or reference | Use cases |
 |---|---|---|---|
 | Materials: `StructuralMaterial` with mandatory E, ν, ρ and optional strengths by type (steel, concrete, cold-formed, aluminium, timber, masonry); range validation; JSON Schema | `materials` | EN 1993-1-1 §3.2.6; EN 10025-2 Table 7; EN 1992-1-1 Table 3.1 and §3.1.3; EN 14080; EN 1999-1-1 | [5 cases](#1-materials) |
-| Sections: `FrameSection` with mandatory A, I_x, I_y, J and optional C_w, elastic and plastic moduli and dimensions; strong- and weak-axis aliases; axis map with the internal forces | `sections` | EN 10365 / EN 10210 (catalogue check); SAP2000 M3 strong / M2 weak convention | [5 cases](#2-sections) |
+| Sections: `FrameSection` with mandatory A, I_x, I_y, J and optional C_w, elastic and plastic moduli, dimensions, section class and Class 4 effective properties; strong- and weak-axis aliases; axis map with the internal forces | `sections` | EN 10365 / EN 10210 (catalogue check); SAP2000 M3 strong / M2 weak convention | [5 cases](#2-sections) |
 | Internal forces and data contract: `InternalForces` per station with tension positive and components zero by default; JSON Lines; composite models with `$defs`; mapping from SAP2000 | `forces`, Pydantic v2 | Local axis convention 1-2-3 | [5 cases](#3-internal-forces-and-data-contract) |
 | FEA helpers: 6×6 stiffness of a 2D beam with EI(x) and EA(x) by Simpson (cantilever flexibility), condensed end rotational springs (Monforton and Wu) | `fea.non_prismatic`, `fea.semi_rigid` | Monforton and Wu (1963); EN 1993-1-8 §5.2.2.5 (joint classification); PCA frame constant tables | [5 cases](#4-finite-element-helpers) |
 
@@ -242,10 +242,10 @@ Si se cruzan los ejes (M_z con S_y): σ = 1118 MPa, 6.9 veces la real. El esquem
 
 ```text
 Sección mínima: {'name': 'barra genérica', 'A_mm2': 5000.0, 'Ix_mm4': 80000000.0, 'Iy_mm4': 6000000.0, 'J_mm4': 200000.0}
-  opcionales en None: ['Cw_mm6', 'Zx_mm3', 'Zy_mm3', 'Sx_mm3', 'Sy_mm3', 'depth_mm', 'width_mm']
-Sección completa: W14X90, 12 de 12 campos
+  opcionales en None: ['Cw_mm6', 'Zx_mm3', 'Zy_mm3', 'Sx_mm3', 'Sy_mm3', 'depth_mm', 'width_mm', 'section_class', 'A_eff_mm2', 'Ix_eff_mm4', 'Iy_eff_mm4', 'Sx_eff_mm3', 'Sy_eff_mm3']
+Sección laminada con propiedades brutas: W14X90, 12 de 18 campos; sin rellenar: ['section_class', 'A_eff_mm2', 'Ix_eff_mm4', 'Iy_eff_mm4', 'Sx_eff_mm3', 'Sy_eff_mm3']
 
-JSON Schema: obligatorias ['name', 'A_mm2', 'Ix_mm4', 'Iy_mm4', 'J_mm4']; opcionales ['Cw_mm6', 'Zx_mm3', 'Zy_mm3', 'Sx_mm3', 'Sy_mm3', 'depth_mm', 'width_mm']
+JSON Schema: obligatorias ['name', 'A_mm2', 'Ix_mm4', 'Iy_mm4', 'J_mm4']; opcionales ['Cw_mm6', 'Zx_mm3', 'Zy_mm3', 'Sx_mm3', 'Sy_mm3', 'depth_mm', 'width_mm', 'section_class', 'A_eff_mm2', 'Ix_eff_mm4', 'Iy_eff_mm4', 'Sx_eff_mm3', 'Sy_eff_mm3']
 
   sin J          → missing en J_mm4
   área 0         → greater_than en A_mm2
@@ -366,7 +366,7 @@ El mapeo vive en el importador (y debe declarar el convenio de signo de P); el e
 
 ```text
 JSON Schema de MemberCheckInput: propiedades ['member_id', 'length_m', 'material', 'section', 'forces']; $defs = ['FrameSection', 'InternalForces', 'MaterialType', 'StructuralMaterial']
-Documento serializado: 996 bytes; vuelta validada igual al original: True
+Documento serializado: 1106 bytes; vuelta validada igual al original: True
 
   x [m] M_z [kN·m]  σ = N/A + M/S [MPa]  σ/f_y
     0.0        0.0                  2.2   0.01
@@ -441,8 +441,8 @@ Dintel L = 12 m, IPE 400: 4EI/L = 16,191 kN·m/rad, 2EI/L = 8,096, 12EI/L³ = 33
          3 m, canto ×2.0              37,434         2.31     25,659       0.685             876         2.60
          2 m, canto ×1.5              23,243         1.44     13,739       0.591             514         1.52
 
-La rigidez rotacional del nudo sube un 74 % con cartelas de 2 m que doblan el canto y el factor de transmisión pasa de 0,50 a 0,64: es lo que hace rentable la cartela frente a aumentar el perfil en toda la luz.
-n = 240 intervalos para que el quiebro de EI(x) en x = a caiga cerca de un nodo de Simpson; con EI continuo bastan 20.
+La rigidez rotacional del nudo sube un 74 % con cartelas de 2 m que doblan el canto y el factor de transmisión pasa de 0.50 a 0.64: es lo que hace rentable la cartela frente a aumentar el perfil en toda la luz.
+Quiebros de EI(x) en x = 2 y 10 m, error máximo frente a Simpson por tramos con n = 400: n = 20 con breakpoints_x 4.1e-04; n = 240 sin ellos (la tabla) 4.5e-08; n = 20 sin ellos 3.3e-03.
 ```
 
 </details>
@@ -505,7 +505,7 @@ Una unión en el umbral «rígido» de pórtico arriostrado (8·EI_b/L_b) pierde
 - There is no section or material catalogue: the package validates what it receives, it does not fill it in.
 - `FrameSection` does not distinguish class 4 sections and does not store geometry (flanges, webs); effective properties are the producer's responsibility.
 - `InternalForces` is one member station; it does not model plate forces, supports or combinations (the combination identifier goes in `member_id` or in the consumer's composite model).
-- `beam_stiffness_2d` is plane bending under Euler-Bernoulli assumptions (no shear deformation) with EI(x) given by the user; with piecewise EI, n must be large enough for the break to fall near a Simpson node.
+- `beam_stiffness_2d` is plane bending under Euler-Bernoulli assumptions (no shear deformation) with EI(x) given by the user; with piecewise EI, pass the breaks in `breakpoints_x` (piecewise Simpson) or use an n large enough for them to fall near a Simpson node.
 - `semi_rigid_bending_stiffness` takes R in the units of K_b (kN·m/rad if K_b is in kN and m); passing a relative stiffness k·L/EI makes everything come out pinned.
 - The axis conventions (x strong, M_z strong) are those of the Loadpath ecosystem and of SAP2000; other programs use others, and the mapping is the importer's job.
 
