@@ -1,9 +1,0 @@
-S355: λ_1 = π·sqrt(E/f_y) = 76.4; pilar L_cr = 4 m
-
-  perfil       peso [kg/m] i_x [mm] i_y [mm]    λ_y   λ̄_y      régimen
-  IPE 300             42.2    124.6     33.5  119.4   1.56      esbelto
-  HEB 300            117.0    129.9     75.8   52.8   0.69   intermedio
-  HEA 200             42.3     82.8     49.8   80.3   1.05   intermedio
-  CHS 219.1x8         41.6     74.7     74.7   53.5   0.70   intermedio
-
-Pesos de catálogo: IPE 300 42,2; HEB 300 117; HEA 200 42,3; CHS 219,1×8 41,6 kg/m. El IPE 300 pesa lo mismo que el HEA 200 y es 2,6 veces más esbelto en su eje débil.
