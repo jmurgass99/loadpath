@@ -1,8 +1,0 @@
-Exportadas 45 estaciones en 5486 bytes de JSONL (+1 línea corrupta de prueba)
-
-Reimportadas 45 válidas; rechazadas: [(46, ['greater_than_equal'])]
-
-  barra  |N| máx [kN] |V_z| máx [kN] |M_z| máx [kN·m]
-  P-1           420.0           25.0             50.0
-  D-1            35.0          180.0            240.0
-  P-2           420.0           25.0             50.0
